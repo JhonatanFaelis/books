@@ -1,6 +1,8 @@
-import './App.css';
-import Search from './components/Search/Search';
+import '../App.css';
+import Search from '../components/Search/Search';
 import styled from 'styled-components';
+import UltimosLancamentos from '../components/UltimosLancamentos/UltimosLancamentos';
+import { getLivros } from '../servicos/livros';
 
 const AppContainer = styled.div`
     width: 100vw;
@@ -15,8 +17,10 @@ const AppContainer = styled.div`
 
 
 function Home() {
+
   return (
     <AppContainer>
+      <UltimosLancamentos />
       <Search/>
     </AppContainer>
   );

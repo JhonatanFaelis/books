@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Home from './Home';
+import Home from './rotas/Home';
 import reportWebVitals from './reportWebVitals';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import NavBar from './components/NavBar/NavBar';
 import logo from './images/logo.svg'
+import Favoritos from './rotas/Favoritos';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -34,7 +35,7 @@ root.render(
     <BrowserRouter>
     <NavBar altImg='Logo' logo={logo} nome='Alura Books' />
       <Routes>
-        <Route path='/favoritos'  element={<p>OI!</p>}/>
+        <Route path='/favoritos'  element={<Favoritos/>}/>
         <Route path='/'  element={<Home/>}/>
       </Routes>
     </BrowserRouter>

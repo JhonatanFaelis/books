@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Input from '../Input/Input'
 import styled from 'styled-components'
 import { livros } from './DataSearch'
@@ -12,6 +12,8 @@ import CardContent from '../Geral/CardContent'
 import Resultado from '../Geral/Resultado'
 import CardRecomendacao from '../CardRecomendacao/CardRecomendacao'
 import imagemLivro from '../../images/livro2.png'
+import { getLivros } from '../../servicos/livros'
+import { postFavoritos } from '../../servicos/favoritos'
 
 
 const PesquisaContainer = styled.section`
@@ -27,6 +29,22 @@ const PesquisaContainer = styled.section`
 function Search() {
 
   const [livroPesquisado, setLivroPesquisado] = useState([]);
+  const [livros, setLivros] = useState([]);
+
+  useEffect(() => {
+    fetchLivros()
+  }, [])
+
+
+  const fetchLivros = async () => {
+    const livrosAPI = await getLivros();
+    setLivros(livrosAPI)
+  }
+
+  const insertFavorito = async (id) =>{
+    await postFavoritos(id);
+    alert(`Livro ${id} adicionado aos Favoritos!`)
+  }
 
   return (
     <PesquisaContainer>
@@ -40,17 +58,17 @@ function Search() {
         )
         setLivroPesquisado(resultadoPesquisa)
       }} />
-      <Resultado>
-        {livroPesquisado.map((l) => (
-          <CardContainer>
-            <CardImage src={l.src} />
+      {livroPesquisado.map((l) => (
+          <Resultado onClick={()=> insertFavorito(l.id)}>
+          <CardContainer key={l.id}>
+            <CardImage src={imagemLivro} />
             <CardContent>
               <BookName>{l.nome}</BookName>
             </CardContent>
           </CardContainer>
+          </Resultado>
         ))}
-      </Resultado>
-      <UltimosLancamentos />
+
       <CardRecomendacao descricao={'teste'} img={imagemLivro} subtitulo={'teste de subtitulo'} titulo={'Teste de titulo'} />
     </PesquisaContainer>
   )
